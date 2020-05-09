@@ -39,6 +39,7 @@ describe('Sticky', function () {
         setTimeout(function test () {
             // console.log($('#sticky-2').getRect());
             expect($('#sticky-2').getTop()).to.below(0, 'sticky-2');
+            // expect(0).to.equal(1);
 
             window.scrollTo(0, 1200);
             setTimeout(function test () {

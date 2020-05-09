@@ -438,6 +438,8 @@ describe('Sticky', function () {
                 return <Sticky ref="sticky" enabled={this.state.enabled} />
             }
         }
+        
+        // expect(false).to.eql(true);
 
         var parent = ReactTestUtils.renderIntoDocument(React.createElement(TestComponent, {}));
         // toggle the enabled prop off

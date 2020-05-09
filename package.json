@@ -6,7 +6,7 @@
   "scripts": {
     "build": "grunt dist",
     "devtest": "grunt unit",
-    "func": "./tests/functional/saucelabs.sh",
+    "func": "grunt functional",
     "lint": "eslint --cache --ext .js,.jsx . --fix",
     "prepublish": "grunt dist",
     "test": "grunt cover"

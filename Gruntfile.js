@@ -4,6 +4,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var { babel } = require('babel-loader');
 
 module.exports = function (grunt) {
     // autoload installed tasks
@@ -142,7 +143,7 @@ module.exports = function (grunt) {
                     }
                 },
                 command: 'node tests/helpers/rAF.js node_modules/istanbul/lib/cli.js cover --dir <%= project.coverage_dir %> ' +
-                    '-- ./node_modules/mocha/bin/_mocha <%= project.tmp %>/<%= project.unit %> ' +
+                    '-- ./node_modules/mocha/bin/mocha <%= project.tmp %>/<%= project.unit %> ' +
                     '--recursive --reporter xunit-file'
             },
             mocha: {
@@ -156,13 +157,22 @@ module.exports = function (grunt) {
             functional: {
                 entry: './<%= project.functional %>/bootstrap.js',
                 output: {
-                    path: './<%= project.functional %>/'
+                    path: path.resolve(__dirname, './<%= project.functional %>/build'),
                 },
+                mode: 'development',
                 module: {
-                    loaders: [
-                        { test: /\.css$/, loader: 'style!css' },
-                        { test: /\.jsx$/, loader: require.resolve('babel-loader') },
-                        { test: /\.json$/, loader: 'json-loader'}
+                    rules: [
+                        { test: /\.css$/, use: 'style!css' },
+                        { test: /\.jsx$/, use: 'babel-loader', query: { presets: ['react', 'es2015'] } },
+                        // { test: /\.jsx$/, use: require.resolve('babel-loader'), options: {} },
+                        // {
+                        //     test: /\.jsx$/,
+                        //     use: [{
+                        //         loader: require.resolve('babel-loader').babel
+                        //     }]
+                        // },
+                        // { test: /\.jsx$/, use: 'babel-loader' },
+                        { test: /\.json$/, use: 'json-loader' }
                     ]
                 }
             }
